@@ -1,0 +1,8 @@
+version: "3"
+services:
+  nginx-build:
+    volumes:
+      - ./:/nginx-dist
+    build:
+      context: .
+      dockerfile: Dockerfile.build
