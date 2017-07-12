@@ -1,5 +1,8 @@
-FROM nginx:1.13.0
+FROM nginx:1.13.2
 
-ADD ./nginx_1.13.0-1~stretch_amd64.deb /nginx-pagespeed.deb
+RUN apt-get update \
+    && apt-get install -y libcurl3 libjansson4
+
+ADD ./nginx_1.13.2-1~stretch_amd64.deb /nginx-pagespeed.deb
 
 RUN dpkg --install /nginx-pagespeed.deb
