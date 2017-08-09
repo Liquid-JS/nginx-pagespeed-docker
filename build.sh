@@ -22,5 +22,5 @@ sed -i "0,/CFLAGS\=\\\"\\\"/{/CFLAGS\=\\\"\\\"/ s/$/ --add-module=\/nginx\/nginx
 
 dpkg-buildpackage -b
 
-mkdir -p /nginx-dist
-cp /nginx/*.deb /nginx-dist/
+#mkdir -p /nginx-dist
+#cp /nginx/*.deb /nginx-dist/
