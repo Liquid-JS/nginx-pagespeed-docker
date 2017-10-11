@@ -1,7 +1,7 @@
-FROM nginx:1.13.3
+FROM nginx:1.13.5
 
-ENV NGINX_VERSION 1.13.3
-ENV NPS_VERSION 1.12.34.2
+ENV NGINX_VERSION 1.13.5
+ENV NPS_VERSION 1.12.34.3
 ENV OSSL_VERSION 1.1.0f
 ENV CODENAME stretch
 
@@ -14,7 +14,7 @@ RUN wget http://nginx.org/keys/nginx_signing.key \
     && echo "deb-src http://nginx.org/packages/mainline/debian/ ${CODENAME} nginx" >> /etc/apt/sources.list \
     && apt-get update \
     && apt-get build-dep -y nginx=${NGINX_VERSION}
-	
+
 WORKDIR /nginx
 
 ADD ./build.sh build.sh
@@ -23,6 +23,6 @@ RUN ./build.sh
 
 
 
-FROM nginx:1.13.3
-COPY --from=0 /nginx/nginx_1.13.3-1~stretch_amd64.deb /nginx-pagespeed.deb
+FROM nginx:1.13.5
+COPY --from=0 /nginx/nginx_1.13.5-2~stretch_amd64.deb /nginx-pagespeed.deb
 RUN dpkg --install /nginx-pagespeed.deb && rm /nginx-pagespeed.deb
