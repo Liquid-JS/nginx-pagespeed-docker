@@ -1,7 +1,7 @@
 #!/bin/bash
 mkdir -p /nginx
 cd /nginx
-apt-get source nginx=${NGINX_VERSION}
+apt-get source nginx=${NGINX_VERSION}-1
 mkdir -p nginx-${NGINX_VERSION}/debian/modules
 cd nginx-${NGINX_VERSION}/debian/modules
 
