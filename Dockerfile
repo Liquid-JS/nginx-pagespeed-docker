@@ -19,7 +19,7 @@ WORKDIR /nginx
 
 ADD ./build.sh build.sh
 
-RUN ./build.sh
+RUN chmod a+x ./build.sh && ./build.sh
 
 
 
