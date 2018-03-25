@@ -13,3 +13,4 @@ pipeline:
       - docker login -u $$USERNAME -p $$PASSWORD
       - docker build $$(for v in $$(cat version); do echo "-t $repo:$v"; done) .
       - docker push $$repo
+
