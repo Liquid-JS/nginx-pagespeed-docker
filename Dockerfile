@@ -1,8 +1,8 @@
-FROM nginx:1.14.0
+FROM nginx:1.14.1
 
-ENV NGINX_VERSION 1.14.0
+ENV NGINX_VERSION 1.14.1
 ENV NPS_VERSION 1.13.35.2-stable
-ENV OSSL_VERSION 1.1.0g
+ENV OSSL_VERSION 1.1.1a
 ENV CODENAME stretch
 
 RUN apt-get update \
@@ -23,6 +23,6 @@ RUN chmod a+x ./build.sh && ./build.sh
 
 
 
-FROM nginx:1.14.0
-COPY --from=0 /nginx/nginx_1.14.0-1~stretch_amd64.deb /nginx-pagespeed.deb
+FROM nginx:1.14.1
+COPY --from=0 /nginx/nginx_1.14.1-1~stretch_amd64.deb /nginx-pagespeed.deb
 RUN dpkg --install /nginx-pagespeed.deb && rm /nginx-pagespeed.deb

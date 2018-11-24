@@ -17,6 +17,7 @@ cd /nginx/nginx-${NGINX_VERSION}
 wget https://www.openssl.org/source/openssl-${OSSL_VERSION}.tar.gz
 tar -xf openssl-${OSSL_VERSION}.tar.gz
 sed -i "0,/CFLAGS\=\\\"\\\"/{/CFLAGS\=\\\"\\\"/ s/$/ --add-module=\/nginx\/nginx-${NGINX_VERSION}\/debian\/modules\/incubator-pagespeed-ngx-${NPS_VERSION} ${PS_NGX_EXTRA_FLAGS} --with-openssl=\/nginx\/nginx-${NGINX_VERSION}\/openssl-${OSSL_VERSION}/}" /nginx/nginx-${NGINX_VERSION}/debian/rules
+sed -i "s/CFLAGS\=\\\"\\\"/CFLAGS\=\\\"-Wno-missing-field-initializers\\\"/" /nginx/nginx-${NGINX_VERSION}/debian/rules
 #sed "41 a --add-module=/nginx/nginx-${NGINX_VERSION}/debian/modules/ngx_pagespeed-release-${NPS_VERSION} ${PS_NGX_EXTRA_FLAGS}" -i /nginx/nginx-${NGINX_VERSION}/debian/rules
 #sed "46 a --with-openssl=/nginx/nginx-${NGINX_VERSION}/openssl-${OSSL_VERSION}" -i /nginx/nginx-${NGINX_VERSION}/debian/rules
 
