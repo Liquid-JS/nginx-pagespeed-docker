@@ -1,6 +1,6 @@
-FROM nginx:1.17.3
+FROM nginx:1.17.4
 
-ENV NGINX_VERSION 1.17.3
+ENV NGINX_VERSION 1.17.4
 ENV NPS_VERSION 1.13.35.2-stable
 ENV OSSL_VERSION 1.1.1d
 ENV CODENAME stretch
@@ -23,6 +23,6 @@ RUN chmod a+x ./build.sh && ./build.sh
 
 
 
-FROM nginx:1.17.3
-COPY --from=0 /nginx/nginx_1.17.3-1~stretch_amd64.deb /nginx-pagespeed.deb
+FROM nginx:1.17.4
+COPY --from=0 /nginx/nginx_1.17.4-1~stretch_amd64.deb /nginx-pagespeed.deb
 RUN dpkg --install /nginx-pagespeed.deb && rm /nginx-pagespeed.deb
