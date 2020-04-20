@@ -1,6 +1,6 @@
-FROM nginx:1.17.9
+FROM nginx:1.17.10
 
-ENV NGINX_VERSION 1.17.9
+ENV NGINX_VERSION 1.17.10
 ENV NPS_VERSION 1.13.35.2-stable
 ENV OSSL_VERSION 1.1.1f
 ENV CODENAME buster
@@ -24,6 +24,6 @@ RUN apt-get download libbrotli1
 
 
 
-FROM nginx:1.17.9
-COPY --from=0 /nginx/nginx_1.17.9-1~buster_amd64.deb /nginx/libbrotli1*.deb /_pkgs/
+FROM nginx:1.17.10
+COPY --from=0 /nginx/nginx_1.17.10-1~buster_amd64.deb /nginx/libbrotli1*.deb /_pkgs/
 RUN dpkg --install /_pkgs/*.deb && rm -rf /_pkgs
