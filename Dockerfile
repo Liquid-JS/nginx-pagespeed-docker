@@ -1,6 +1,6 @@
-FROM nginx:1.19.5
+FROM nginx:1.19.6
 
-ENV NGINX_VERSION 1.19.5
+ENV NGINX_VERSION 1.19.6
 ENV NPS_VERSION 1.14.33.1-RC1
 ENV OSSL_VERSION 1.1.1j
 ENV NDK_VERSION 0.3.1
@@ -30,7 +30,7 @@ RUN apt-get download libbrotli1
 
 
 
-FROM nginx:1.19.5
-COPY --from=0 /nginx/nginx_1.19.5-1~buster_amd64.deb /nginx/libbrotli1*.deb /_pkgs/
+FROM nginx:1.19.6
+COPY --from=0 /nginx/nginx_1.19.6-1~buster_amd64.deb /nginx/libbrotli1*.deb /_pkgs/
 COPY --from=0 /_lua/deps/usr/local /usr/local
 RUN dpkg --install /_pkgs/*.deb && rm -rf /_pkgs
