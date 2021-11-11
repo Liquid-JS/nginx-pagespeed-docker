@@ -1,14 +1,14 @@
-FROM nginx:1.21.1
+FROM nginx:1.21.3
 
-ENV NGINX_VERSION 1.21.1
+ENV NGINX_VERSION 1.21.3
 ENV NPS_VERSION 1.14.33.1-RC1
-ENV OSSL_VERSION 1.1.1k
+ENV OSSL_VERSION 1.1.1l
 ENV NDK_VERSION 0.3.1
-ENV NGINX_LUA_VERSION 0.10.19
+ENV NGINX_LUA_VERSION 0.10.20
 ENV LUA_JIT_VERSION 2.1-20210510
 ENV LUA_VERSION 5.1
-ENV LUA_RESTY_VERSION 0.1.21
-ENV LUA_RESTY_LRU_VERSION 0.10
+ENV LUA_RESTY_VERSION 0.1.22
+ENV LUA_RESTY_LRU_VERSION 0.11
 ENV CODENAME buster
 
 RUN apt-get update \
@@ -30,7 +30,7 @@ RUN apt-get download libbrotli1
 
 
 
-FROM nginx:1.21.1
-COPY --from=0 /nginx/nginx_1.21.1-1~buster_amd64.deb /nginx/libbrotli1*.deb /_pkgs/
+FROM nginx:1.21.3
+COPY --from=0 /nginx/nginx_1.21.3-1~buster_amd64.deb /nginx/libbrotli1*.deb /_pkgs/
 COPY --from=0 /_lua/deps/usr/local /usr/local
 RUN dpkg --install /_pkgs/*.deb && rm -rf /_pkgs
