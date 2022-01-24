@@ -57,7 +57,7 @@ export LUAJIT_LIB=/usr/local/lib
 export LUAJIT_INC=/usr/local/include/luajit-2.1
 
 cd /nginx/nginx-${NGINX_VERSION}
-sed -i "0,/CFLAGS\=\\\"\\\"/{/CFLAGS\=\\\"\\\"/ s/$/ --add-module=\/nginx\/nginx-${NGINX_VERSION}\/debian\/modules\/incubator-pagespeed-ngx-${NPS_VERSION} ${PS_NGX_EXTRA_FLAGS} --add-module=\/nginx\/nginx-${NGINX_VERSION}\/ngx_brotli-master --with-openssl=\/nginx\/nginx-${NGINX_VERSION}\/openssl-${OSSL_VERSION} --add-module=\/nginx\/nginx-${NGINX_VERSION}\/ngx_devel_kit-${NDK_VERSION} --add-module=\/nginx\/nginx-${NGINX_VERSION}\/lua-nginx-module-${NGINX_LUA_VERSION}/}" /nginx/nginx-${NGINX_VERSION}/debian/rules
+sed -i "0,/CFLAGS\=\\\"\\\"/{/CFLAGS\=\\\"\\\"/ s/$/ --with-ld-opt=-lpcre --add-module=\/nginx\/nginx-${NGINX_VERSION}\/debian\/modules\/incubator-pagespeed-ngx-${NPS_VERSION} ${PS_NGX_EXTRA_FLAGS} --add-module=\/nginx\/nginx-${NGINX_VERSION}\/ngx_brotli-master --with-openssl=\/nginx\/nginx-${NGINX_VERSION}\/openssl-${OSSL_VERSION} --add-module=\/nginx\/nginx-${NGINX_VERSION}\/ngx_devel_kit-${NDK_VERSION} --add-module=\/nginx\/nginx-${NGINX_VERSION}\/lua-nginx-module-${NGINX_LUA_VERSION}/}" /nginx/nginx-${NGINX_VERSION}/debian/rules
 sed -i "s/CFLAGS\=\\\"\\\"/CFLAGS\=\\\"-Wno-missing-field-initializers\\\"/" /nginx/nginx-${NGINX_VERSION}/debian/rules
 sed -i "s/dh_shlibdeps -a/dh_shlibdeps -a --dpkg-shlibdeps-params=--ignore-missing-info/" /nginx/nginx-${NGINX_VERSION}/debian/rules
 #sed "41 a --add-module=/nginx/nginx-${NGINX_VERSION}/debian/modules/ngx_pagespeed-release-${NPS_VERSION} ${PS_NGX_EXTRA_FLAGS}" -i /nginx/nginx-${NGINX_VERSION}/debian/rules
