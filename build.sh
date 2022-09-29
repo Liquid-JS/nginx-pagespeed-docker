@@ -5,11 +5,13 @@ apt-get source nginx=${NGINX_VERSION}-1
 mkdir -p nginx-${NGINX_VERSION}/debian/modules
 cd nginx-${NGINX_VERSION}/debian/modules
 
-wget https://github.com/apache/incubator-pagespeed-ngx/archive/v${NPS_VERSION}.zip -O release-${NPS_VERSION}.zip
+wget https://github.com/apache/incubator-pagespeed-ngx/archive/refs/heads/master.zip -O release-${NPS_VERSION}.zip
 unzip release-${NPS_VERSION}.zip
+mv incubator-pagespeed-ngx-master incubator-pagespeed-ngx-${NPS_VERSION}
 cd incubator-pagespeed-ngx-${NPS_VERSION}/
 psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
 [ -e scripts/format_binary_url.sh ] && psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
+psol_url=https://dist.apache.org/repos/dist/release/incubator/pagespeed/1.14.36.1/x64/psol-1.14.36.1-apache-incubating-x64.tar.gz
 wget ${psol_url}
 tar -xzvf $(basename ${psol_url})
 
@@ -26,8 +28,9 @@ wget -O ndk.tar.gz https://github.com/vision5/ngx_devel_kit/archive/v${NDK_VERSI
 tar -xf ndk.tar.gz
 
 cd /nginx/nginx-${NGINX_VERSION}
-wget -O nginx-lua.tar.gz https://github.com/openresty/lua-nginx-module/archive/v${NGINX_LUA_VERSION}.tar.gz
+wget -O nginx-lua.tar.gz https://github.com/openresty/lua-nginx-module/archive/d518adcac43006f121e83c1b67c7f5177ab44757.tar.gz
 tar -xf nginx-lua.tar.gz
+mv lua-nginx-module-d518adcac43006f121e83c1b67c7f5177ab44757 lua-nginx-module-${NGINX_LUA_VERSION}
 
 mkdir -p /_lua/deps
 
