@@ -28,9 +28,9 @@ wget -O ndk.tar.gz https://github.com/vision5/ngx_devel_kit/archive/v${NDK_VERSI
 tar -xf ndk.tar.gz
 
 cd /nginx/nginx-${NGINX_VERSION}
-wget -O nginx-lua.tar.gz https://github.com/openresty/lua-nginx-module/archive/d518adcac43006f121e83c1b67c7f5177ab44757.tar.gz
+wget -O nginx-lua.tar.gz https://github.com/openresty/lua-nginx-module/archive/v${NGINX_LUA_VERSION}.tar.gz
 tar -xf nginx-lua.tar.gz
-mv lua-nginx-module-d518adcac43006f121e83c1b67c7f5177ab44757 lua-nginx-module-${NGINX_LUA_VERSION}
+#mv lua-nginx-module-* lua-nginx-module-${NGINX_LUA_VERSION}
 
 mkdir -p /_lua/deps
 
