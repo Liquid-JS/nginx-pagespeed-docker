@@ -9,9 +9,9 @@ wget https://github.com/apache/incubator-pagespeed-ngx/archive/refs/heads/master
 unzip release-${NPS_VERSION}.zip
 mv incubator-pagespeed-ngx-master incubator-pagespeed-ngx-${NPS_VERSION}
 cd incubator-pagespeed-ngx-${NPS_VERSION}/
-psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
-[ -e scripts/format_binary_url.sh ] && psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
-psol_url=https://dist.apache.org/repos/dist/release/incubator/pagespeed/1.14.36.1/x64/psol-1.14.36.1-apache-incubating-x64.tar.gz
+#psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
+#[ -e scripts/format_binary_url.sh ] && psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
+psol_url=https://archive.apache.org/dist/incubator/pagespeed/1.14.36.1/x64/psol-1.14.36.1-apache-incubating-x64.tar.gz
 wget ${psol_url}
 tar -xzvf $(basename ${psol_url})
 
