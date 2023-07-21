@@ -11,9 +11,10 @@ mv incubator-pagespeed-ngx-master incubator-pagespeed-ngx-${NPS_VERSION}
 cd incubator-pagespeed-ngx-${NPS_VERSION}/
 #psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_VERSION}.tar.gz
 #[ -e scripts/format_binary_url.sh ] && psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
-psol_url=https://archive.apache.org/dist/incubator/pagespeed/1.14.36.1/x64/psol-1.14.36.1-apache-incubating-x64.tar.gz
+#psol_url=https://archive.apache.org/dist/incubator/pagespeed/1.14.36.1/x64/psol-1.14.36.1-apache-incubating-x64.tar.gz
+psol_url=http://www.tiredofit.nl/psol-jammy.tar.xz
 wget ${psol_url}
-tar -xzvf $(basename ${psol_url})
+tar -xvf $(basename ${psol_url})
 
 cd /nginx/nginx-${NGINX_VERSION}
 wget https://www.openssl.org/source/openssl-${OSSL_VERSION}.tar.gz
@@ -60,7 +61,7 @@ export LUAJIT_LIB=/usr/local/lib
 export LUAJIT_INC=/usr/local/include/luajit-2.1
 
 cd /nginx/nginx-${NGINX_VERSION}
-sed -i "0,/CFLAGS\=\\\"\\\"/{/CFLAGS\=\\\"\\\"/ s/$/ --with-ld-opt=-lpcre --add-module=\/nginx\/nginx-${NGINX_VERSION}\/debian\/modules\/incubator-pagespeed-ngx-${NPS_VERSION} ${PS_NGX_EXTRA_FLAGS} --add-module=\/nginx\/nginx-${NGINX_VERSION}\/ngx_brotli-master --with-openssl=\/nginx\/nginx-${NGINX_VERSION}\/openssl-${OSSL_VERSION} --add-module=\/nginx\/nginx-${NGINX_VERSION}\/ngx_devel_kit-${NDK_VERSION} --add-module=\/nginx\/nginx-${NGINX_VERSION}\/lua-nginx-module-${NGINX_LUA_VERSION}/}" /nginx/nginx-${NGINX_VERSION}/debian/rules
+sed -i "0,/CFLAGS\=\\\"\\\"/{/CFLAGS\=\\\"\\\"/ s/$/ --with-ld-opt=-lpcre --add-module=\/nginx\/nginx-${NGINX_VERSION}\/debian\/modules\/incubator-pagespeed-ngx-${NPS_VERSION} ${PS_NGX_EXTRA_FLAGS} --add-module=\/nginx\/nginx-${NGINX_VERSION}\/ngx_brotli-master --add-module=\/nginx\/nginx-${NGINX_VERSION}\/ngx_devel_kit-${NDK_VERSION} --add-module=\/nginx\/nginx-${NGINX_VERSION}\/lua-nginx-module-${NGINX_LUA_VERSION}/}" /nginx/nginx-${NGINX_VERSION}/debian/rules
 sed -i "s/CFLAGS\=\\\"\\\"/CFLAGS\=\\\"-Wno-missing-field-initializers\\\"/" /nginx/nginx-${NGINX_VERSION}/debian/rules
 sed -i "s/dh_shlibdeps -a/dh_shlibdeps -a --dpkg-shlibdeps-params=--ignore-missing-info/" /nginx/nginx-${NGINX_VERSION}/debian/rules
 #sed "41 a --add-module=/nginx/nginx-${NGINX_VERSION}/debian/modules/ngx_pagespeed-release-${NPS_VERSION} ${PS_NGX_EXTRA_FLAGS}" -i /nginx/nginx-${NGINX_VERSION}/debian/rules
