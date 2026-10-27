@@ -1,0 +1,59 @@
+name: Publish Docker image
+
+on:
+  push:
+    tags:
+      - v*
+
+permissions:
+  contents: read
+
+jobs:
+  # nginx version numbering: odd minor (1.31.x) is mainline, published from
+  # master as latest/mainline/x.x.x/x.x; even minor (1.30.x) is stable,
+  # published from the stable branch as stable/x.x.x/x.x.
+  channel:
+    runs-on: ubuntu-latest
+    outputs:
+      mainline: ${{ steps.channel.outputs.mainline }}
+    steps:
+      - id: channel
+        run: |
+          minor="$(echo "${GITHUB_REF_NAME#v}" | cut -d. -f2)"
+          if [ "$((minor % 2))" -eq 1 ]; then
+            echo "mainline=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "mainline=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  # The PageSpeed stage is a full Bazel build (tens of minutes, ~1.5 GB RAM per
+  # job), far too slow under QEMU. Docker's reusable builder runs each platform
+  # on its own native GitHub-hosted runner and assembles the multi-arch manifest.
+  publish:
+    needs: channel
+    uses: docker/github-builder/.github/workflows/build.yml@v1
+    permissions:
+      contents: read
+      id-token: write # signed attestations and signed GHA cache entries
+    with:
+      output: image
+      push: true
+      platforms: linux/amd64,linux/arm64
+      build-args: |
+        PAGESPEED_JOBS=4
+      cache: true
+      cache-mode: max
+      meta-images: hitko/nginx-pagespeed
+      meta-tags: |
+        type=semver,pattern={{version}}
+        type=semver,pattern={{major}}.{{minor}}
+        type=raw,value=latest,enable=${{ needs.channel.outputs.mainline == 'true' }}
+        type=raw,value=mainline,enable=${{ needs.channel.outputs.mainline == 'true' }}
+        type=raw,value=stable,enable=${{ needs.channel.outputs.mainline != 'true' }}
+      meta-flavor: |
+        latest=false
+    secrets:
+      registry-auths: |
+        - registry: docker.io
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
