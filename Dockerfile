@@ -2,10 +2,10 @@
 # Stage 1: PageSpeed dynamic module (We-Amp mod_pagespeed), built from source
 # against the exact nginx version with We-Amp's own per-distro recipe.
 # ---------------------------------------------------------------------------
-FROM nginx:1.30.6 AS pagespeed
+FROM nginx:1.30.7 AS pagespeed
 
-ENV NGINX_VERSION=1.30.6
-ENV MPS_VERSION=2.5.2
+ENV NGINX_VERSION=1.30.7
+ENV MPS_VERSION=2.9.2
 ENV CODENAME=trixie
 
 RUN apt-get update && apt-get install -y wget
@@ -25,16 +25,16 @@ RUN cd mod_pagespeed-${MPS_VERSION} \
 # Stage 2: nginx .deb rebuilt from the nginx.org source package with
 # brotli, ngx_devel_kit and lua-nginx-module compiled in.
 # ---------------------------------------------------------------------------
-FROM nginx:1.30.6 AS nginx
+FROM nginx:1.30.7 AS nginx
 
-ENV NGINX_VERSION=1.30.6
+ENV NGINX_VERSION=1.30.7
 ENV OSSL_VERSION=4.0.3
 ENV BROTLI_VERSION=1.2.1
 ENV NDK_VERSION=0.3.4
-ENV NGINX_LUA_VERSION=0.10.32rc7
-ENV LUA_JIT_VERSION=2.1-20261023
+ENV NGINX_LUA_VERSION=0.10.32rc8
+ENV LUA_JIT_VERSION=2.1-20261117
 ENV LUA_VERSION=5.1
-ENV LUA_RESTY_VERSION=0.1.35rc2
+ENV LUA_RESTY_VERSION=0.1.35rc3
 ENV LUA_RESTY_LRU_VERSION=0.15
 ENV CODENAME=trixie
 
@@ -56,8 +56,8 @@ RUN chmod a+x ./build.sh && ./build.sh
 # ---------------------------------------------------------------------------
 # Stage 3: final image
 # ---------------------------------------------------------------------------
-FROM nginx:1.30.6
-COPY --from=nginx /nginx/nginx_1.30.6-1~trixie_*.deb /_pkgs/
+FROM nginx:1.30.7
+COPY --from=nginx /nginx/nginx_1.30.7-1~trixie_*.deb /_pkgs/
 COPY --from=nginx /_lua/deps/usr/local /usr/local
 COPY --from=pagespeed /pagespeed/ngx_pagespeed_module.so /usr/lib/nginx/modules/
 COPY --chmod=755 docker-entrypoint.d/05-load-pagespeed-module.sh /docker-entrypoint.d/
